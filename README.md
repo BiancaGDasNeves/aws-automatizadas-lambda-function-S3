@@ -22,10 +22,14 @@ Usuário envia arquivo → Bucket S3 → Trigger (evento) → Lambda Function �
 
 Exemplo de automação:
 * Quando um arquivo é enviado ao bucket S3 (ObjectCreated), a função Lambda é executada automaticamente para processar o arquivo e mover para outro bucket.
-** Redimensionar uma imagem;
-** Gerar logs;
-** Converter formatos (ex: .csv → .json);
-** Mover o arquivo para outro bucket.
+
+	* Redimensionar uma imagem;
+
+	* Gerar logs;
+
+	* Converter formatos (ex: .csv → .json);
+
+	* Mover o arquivo para outro bucket.
 
 
 ## ⚙️ Tecnologias Utilizadas
@@ -44,6 +48,7 @@ Exemplo de automação:
 
 * Criei um bucket chamado bianca-lambda-automation-s3 (ou nome similar);
 * Configurei as permissões e as notificações de eventos para acionar a função Lambda.
+  
 2️⃣ Desenvolvimento da Função Lambda
 * A função foi desenvolvida em Python 3.9 e configurada para ser acionada automaticamente ao detectar um novo arquivo no bucket.
 
@@ -67,6 +72,7 @@ def lambda_handler(event, context):
         'statusCode': 200,
         'body': json.dumps(f"Arquivo {arquivo} processado com sucesso!")
     }
+
 ```
 3️⃣ Deploy via Console ou CloudFormation
 
