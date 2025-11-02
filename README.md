@@ -48,7 +48,7 @@ Exemplo de automação:
 * A função foi desenvolvida em Python 3.9 e configurada para ser acionada automaticamente ao detectar um novo arquivo no bucket.
 
 Exemplo de código (Python):
-
+```
 import json
 import boto3
 
@@ -67,7 +67,7 @@ def lambda_handler(event, context):
         'statusCode': 200,
         'body': json.dumps(f"Arquivo {arquivo} processado com sucesso!")
     }
-
+```
 3️⃣ Deploy via Console ou CloudFormation
 
 * Fiz o deploy da função Lambda e configurei a trigger S3;
