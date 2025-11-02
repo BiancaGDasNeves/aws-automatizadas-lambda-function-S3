@@ -1,0 +1,127 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >
+  Template CloudFormation - Desafio DIO - Automação com Lambda e S3
+  Autor: Bianca Gonçalves das Neves
+  Cria um bucket S3, uma função Lambda e uma integração automática para processar arquivos.
+
+Parameters:
+  LambdaFunctionName:
+    Type: String
+    Default: bianca-s3-lambda-automation
+    Description: Nome da função Lambda
+  S3InputBucketName:
+    Type: String
+    Default: bianca-input-bucket
+    Description: Nome do bucket de entrada S3
+  S3OutputBucketName:
+    Type: String
+    Default: bianca-output-bucket
+    Description: Nome do bucket de saída S3
+
+Resources:
+
+  ## Bucket de Entrada
+  InputBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref S3InputBucketName
+      NotificationConfiguration:
+        LambdaConfigurations:
+          - Event: "s3:ObjectCreated:*"
+            Function: !GetAtt LambdaFunction.Arn
+
+  ## Bucket de Saída
+  OutputBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref S3OutputBucketName
+
+  ## Função Lambda
+  LambdaFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: !Ref LambdaFunctionName
+      Handler: index.lambda_handler
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Runtime: python3.9
+      Timeout: 60
+      Description: Função Lambda que processa arquivos enviados ao bucket S3
+      Code:
+        ZipFile: |
+          import json
+          import boto3
+
+          def lambda_handler(event, context):
+              s3 = boto3.client('s3')
+              source_bucket = event['Records'][0]['s3']['bucket']['name']
+              source_key = event['Records'][0]['s3']['object']['key']
+              destination_bucket = '<NOME_DO_BUCKET_SAIDA>'
+
+              print(f"Arquivo detectado: {source_key} no bucket {source_bucket}")
+
+              # Copia o arquivo para o bucket de saída
+              s3.copy_object(
+                  Bucket=destination_bucket,
+                  CopySource={'Bucket': source_bucket, 'Key': source_key},
+                  Key=source_key
+              )
+
+              print("Arquivo copiado com sucesso!")
+
+              return {
+                  'statusCode': 200,
+                  'body': json.dumps(f"Arquivo {source_key} processado e copiado para {destination_bucket}")
+              }
+
+  ## Permissões da Função Lambda
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: bianca-lambda-s3-role
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Policies:
+        - PolicyName: LambdaS3AccessPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource: arn:aws:logs:*:*:*
+              - Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:PutObject
+                  - s3:ListBucket
+                  - s3:CopyObject
+                Resource: "*"
+
+  ## Permissão para o S3 acionar a Lambda
+  LambdaPermissionForS3:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref LambdaFunction
+      Action: lambda:InvokeFunction
+      Principal: s3.amazonaws.com
+      SourceArn: !Sub arn:aws:s3:::${S3InputBucketName}
+
+Outputs:
+  InputBucketName:
+    Description: Nome do bucket de entrada
+    Value: !Ref S3InputBucketName
+  OutputBucketName:
+    Description: Nome do bucket de saída
+    Value: !Ref S3OutputBucketName
+  LambdaFunctionName:
+    Description: Nome da função Lambda criada
+    Value: !Ref LambdaFunctionName
