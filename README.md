@@ -1,10 +1,10 @@
-## ☁️ Desafio DIO: Executando Tarefas Automatizadas com AWS Lambda e S3
-# 📘 Descrição do Projeto
+# ☁️ Desafio DIO: Executando Tarefas Automatizadas com AWS Lambda e S3
+## 📘 Descrição do Projeto
 
 Este projeto foi desenvolvido como parte do desafio da Digital Innovation One (DIO), com o objetivo de aplicar na prática os conceitos de computação serverless e automação de tarefas utilizando AWS Lambda e Amazon S3.
 A proposta é criar uma função Lambda automatizada que reage a eventos do S3, executando tarefas pré-definidas — como processar, converter, ou mover arquivos — e documentar toda a experiência técnica de forma organizada.
 
-# 🧩 Objetivos de Aprendizagem
+## 🧩 Objetivos de Aprendizagem
 
 Ao concluir este desafio, fui capaz de:
 
@@ -13,7 +13,7 @@ Ao concluir este desafio, fui capaz de:
 * Automatizar processos através de funções serverless;
 * Documentar e versionar o projeto técnico utilizando o GitHub.
 
-#🏗️ Arquitetura do Projeto
+## 🏗️ Arquitetura do Projeto
 
 A solução segue o fluxo:
 
@@ -28,7 +28,7 @@ Exemplo de automação:
 **Mover o arquivo para outro bucket.
 
 
-#⚙️ Tecnologias Utilizadas
+## ⚙️ Tecnologias Utilizadas
 
 * AWS Lambda
 * Amazon S3
@@ -39,7 +39,7 @@ Exemplo de automação:
 * Git & GitHub
 * Markdown
 
-#🪜 Passo a Passo da Implementação
+## 🪜 Passo a Passo da Implementação
 1️⃣ Criação do Bucket S3
 
 * Criei um bucket chamado bianca-lambda-automation-s3 (ou nome similar);
@@ -78,7 +78,7 @@ def lambda_handler(event, context):
 * Realizei o upload de arquivos no bucket S3;
 * Confirmei que a função foi acionada automaticamente e executou a automação configurada.
 
-#🧠 Insights e Aprendizados
+## 🧠 Insights e Aprendizados
 
 Durante o desenvolvimento deste desafio, aprendi:
 * Como Lambda Functions podem automatizar processos sem servidores;
@@ -86,18 +86,15 @@ Durante o desenvolvimento deste desafio, aprendi:
 * Como o Amazon S3 e o CloudWatch interagem com Lambda para monitoramento;
 * O valor de documentar e compartilhar o processo técnico para aprendizado contínuo.
 
-#📚 Referências
+## 📚 Referências
 
 [Documentação AWS Lambda](https://docs.aws.amazon.com/lambda/latest/dg/welcome.html) 
-
 [Documentação Amazon S3](https://docs.aws.amazon.com/s3/)
-
 [Automatizar a configuração do S3 Object Lambda com CloudFormation](https://docs.aws.amazon.com/AmazonS3/latest/userguide/olap-cloudformation-template.html)
-
 [GitHub Markdown Guide](https://guides.github.com/features/mastering-markdown/)
 
 
-#💼 Autora
+## 💼 Autora
 
 👩‍💻 Bianca Gonçalves das Neves
 📧 biancagneves@gmail.com
