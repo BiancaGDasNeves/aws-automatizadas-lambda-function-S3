@@ -1,5 +1,5 @@
-##☁️ Desafio DIO: Executando Tarefas Automatizadas com AWS Lambda e S3
-#📘 Descrição do Projeto
+## ☁️ Desafio DIO: Executando Tarefas Automatizadas com AWS Lambda e S3
+# 📘 Descrição do Projeto
 
 Este projeto foi desenvolvido como parte do desafio da Digital Innovation One (DIO), com o objetivo de aplicar na prática os conceitos de computação serverless e automação de tarefas utilizando AWS Lambda e Amazon S3.
 A proposta é criar uma função Lambda automatizada que reage a eventos do S3, executando tarefas pré-definidas — como processar, converter, ou mover arquivos — e documentar toda a experiência técnica de forma organizada.
